@@ -1,58 +1,10 @@
 import React, {Component} from 'react'
 import { View, Text, ScrollView, TouchableOpacity} from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import {Main, ButtonStyled, OtherView, Correct} from './../../utils/stylesheets'
-import styled from 'styled-components/native'
+import {Main, ButtonStyled, OtherView, Correct, Question, AnswerParagraph, Incorrect, Answer, Progress} from './../../utils/stylesheets'
 import { connect } from 'react-redux'
 import {fetchDecks} from './../../actions'
 import {filterDecks} from './../../utils/helpers'
-
-const Question = styled.Text`
-    color:#e44549;
-    font-size:30px;
-    padding:30px;
-    align-items:stretch;
-    text-align:center;
-    padding:5px;
-    font-family:'Avenir-Black';
-`;
-
-const AnswerParagraph = styled.Text`
-    color:#e44549;
-    font-size:18px;
-    padding:30px;
-    align-items:stretch;
-    text-align:center;
-    padding:5px;
-    font-family:'Avenir-Black';
-`;
-
-const Incorrect = styled.Text`
-    color:#fff;
-    background:#e44549;
-    font-size:18px;
-    text-align:center;
-    padding:5px;
-    font-family:'Avenir-Black';
-`;
-
-const Answer = styled.Text`
-    color:#fff;
-    background:#f6b63a;
-    font-size:18px;
-    text-align:center;
-    padding:5px;
-    font-family:'Avenir-Black';
-`;
-
-const Progress = styled.Text`
-    color:#fff;
-    background:#e44549;
-    font-size:14px;
-    text-align:center;
-    padding:5px;
-    font-family:'Avenir-Black';
-`;
 
 class QuizView extends Component {
 
@@ -73,25 +25,14 @@ class QuizView extends Component {
             this.setState({totalCorrect: this.state.totalCorrect+1});
 
         if(this.state.currentQuestion === this.props.questions[0].length-1){
-            this.setState({
-                finalized: true,
-                showAnswer:false,
-                showButtons:false,
-            });
+            this.setState({ finalized: true, showAnswer:false, showButtons:false});
         }else{
-            this.setState({
-                currentQuestion: this.state.currentQuestion+1,
-                showAnswer:false,
-                showButtons:false
-            });
+            this.setState({ currentQuestion: this.state.currentQuestion+1, showAnswer:false, showButtons:false });
         }
     };
 
     showAnswer = () =>{
-            this.setState({
-                showAnswer: true,
-                showButtons:true,
-            });
+        this.setState({ showAnswer: true, showButtons:true});
     };
 
     resetQuiz = () => {
@@ -123,16 +64,6 @@ class QuizView extends Component {
     render() {
         const {questions} = this.props;
         const {finalized, showAnswer, showButtons, totalCorrect, currentQuestion} = this.state;
-
-        console.log('questions',questions);
-
-        console.log('STATE',{
-            currentQuestion: currentQuestion,
-            finalized: finalized,
-            showAnswer: showAnswer,
-            showButtons: showButtons,
-            totalCorrect:totalCorrect,
-        });
 
         return (
             <Main>

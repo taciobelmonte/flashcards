@@ -3,6 +3,7 @@ export const ADD_NEW_DECK = 'ADD_NEW_DECK';
 export const ADD_NEW_CARD = 'ADD_NEW_CARD';
 import * as Api from '../utils/Api'
 
+//Function to fetch decks
 export function fetchDecks() {
     return dispatch => {
         Api.getDecks()
@@ -10,6 +11,7 @@ export function fetchDecks() {
     }
 }
 
+//Function called after retrieving data
 export function getDecksSuccess(payload){
     return {
         type: FETCH_DECK,
@@ -17,6 +19,7 @@ export function getDecksSuccess(payload){
     }
 }
 
+//Function to add deck
 export function addNewDeck(deck) {
      return dispatch => {
          Api.saveDeck(deck)
@@ -24,6 +27,7 @@ export function addNewDeck(deck) {
      }
 }
 
+//Function called after retrieving deck
 export function addNewDeckSuccess(payload){
     return {
         type: ADD_NEW_DECK,
@@ -31,6 +35,7 @@ export function addNewDeckSuccess(payload){
     }
 }
 
+//Function to save deck
 export function saveCardToDeck(deckTitle, question, answer) {
     return dispatch => {
         Api.saveCardToDeck(deckTitle, question, answer)
@@ -38,6 +43,7 @@ export function saveCardToDeck(deckTitle, question, answer) {
     }
 }
 
+//Function called after retrieving new card success
 export function addNewCardSuccess(payload){
     return {
         type: ADD_NEW_CARD,

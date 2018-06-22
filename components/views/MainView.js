@@ -3,14 +3,12 @@ import { View, Text, ScrollView, TouchableOpacity, Animated} from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import SingleDeck from './SingleDeck'
 import {connect} from 'react-redux'
-
 import {
     Main,
     TextColor,
     TextParagraph,
     DeckCard,
     TextHeadline } from './../../utils/stylesheets'
-
 import {fetchDecks} from './../../actions'
 import {filterDecks} from './../../utils/helpers'
 
@@ -38,7 +36,6 @@ class MainView extends React.Component {
         const { decks } = this.props;
         const { opacity } = this.state;
 
-        // console.log("DECKS",decks);
         return (
             <Main>
                 <Animated.View style={{opacity}}>

@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import { Alert, View, Text, ScrollView, TextInput, KeyboardAvoidingView} from 'react-native'
+import React, {Component} from 'react'
+import {Alert, View, Text, ScrollView, TextInput, KeyboardAvoidingView } from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
-import { Main, TextColor, TextInputStyled, TextParagraph, ButtonStyled, Correct } from './../../utils/stylesheets'
-
 import {saveCardToDeck} from './../../actions'
+import {Main, TextColor, TextInputStyled, TextParagraph, ButtonStyled, Correct }
+from './../../utils/stylesheets'
 
 class AddDeck extends Component {
 
@@ -14,6 +14,7 @@ class AddDeck extends Component {
         title:''
     };
 
+    //Function to store question/answer on state
     handleTextChange = (value, type) => {
         if(type === 'question'){
             this.setState({question: value});
@@ -26,6 +27,7 @@ class AddDeck extends Component {
         this.setState({title: this.props.navigation.state.params.title});
     }
 
+    //Function to save card / Also implies validation here
     saveCard = (event, question, answer) => {
 
         if(question === '' || question === undefined && answer === '' || answer === undefined){
@@ -41,8 +43,6 @@ class AddDeck extends Component {
                 [{text: 'OK'}],
             );
         }else{
-
-            console.log('Navigation',this.props.navigation);
 
             //Call addNewCard to update store
              this.props.saveCardToDeck(this.state.title, question, answer);

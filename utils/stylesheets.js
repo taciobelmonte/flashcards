@@ -85,3 +85,51 @@ export const TextHeadline = styled.Text`
     font-family:'Avenir-Black';
     width:100%;
 `;
+
+export const Question = styled.Text`
+    color:#e44549;
+    font-size:30px;
+    padding:30px;
+    align-items:stretch;
+    text-align:center;
+    padding:5px;
+    font-family:'Avenir-Black';
+`;
+
+export const AnswerParagraph = styled.Text`
+    color:#e44549;
+    font-size:18px;
+    padding:30px;
+    align-items:stretch;
+    text-align:center;
+    padding:5px;
+    font-family:'Avenir-Black';
+`;
+
+
+export const Incorrect = styled.Text`
+    color:#fff;
+    background:#e44549;
+    font-size:18px;
+    text-align:center;
+    padding:5px;
+    font-family:'Avenir-Black';
+`;
+
+export const Answer = styled.Text`
+    color:#fff;
+    background:#f6b63a;
+    font-size:18px;
+    text-align:center;
+    padding:5px;
+    font-family:'Avenir-Black';
+`;
+
+export const Progress = styled.Text`
+    color:#fff;
+    background:#e44549;
+    font-size:14px;
+    text-align:center;
+    padding:5px;
+    font-family:'Avenir-Black';
+`;

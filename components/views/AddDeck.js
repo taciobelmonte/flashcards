@@ -27,7 +27,6 @@ class AddDeck extends Component {
             //Call addNewDeck to update store
             this.props.addNewDeck(input);
 
-
             //Launches a alert confirmation
             Alert.alert( 'Confirmation', 'Deck has been added with success!',
                 [{text: 'OK', onPress: () => {this.props.navigation.goBack(Keyboard.dismiss())}},],
