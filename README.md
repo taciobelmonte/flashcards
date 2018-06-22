@@ -16,22 +16,25 @@ It's done! You should have Flashcard Mobile App running straight way...
 
 ## Project Structure
 ```bash
-├── app
-       ├── public
-       │   ├── assets
-       |   ├── favicon.ico
-       |   ├── manifest.json
-       │   └── index.html
-       └── src
-           ├── actions
-           ├── assets
-           ├── components
-           ├── reducers
-           ├── tests
-           ├── utils
-           └── index.js
+├── flashcards
+       ├── actions
+       ├── components
+           ├── views
+                ├── AddCard.js
+                ├── AddDeck.js
+                ├── MainView.js
+                ├── QuizView.js
+                ├── Settings.js
+                ├── SingleDeck.js
+           ├── Flashcard.js
+       ├── reducers
+       ├── tests
+       ├── utils
+       ├── utils
+       ├── app.json
+       ├── package.json
+       ├── README.md
        ```
-├── server
 
 
 Developed by @Tacio Belmonte - 2018
