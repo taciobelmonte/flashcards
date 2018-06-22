@@ -44,7 +44,7 @@ export default class Settings extends React.Component {
 
                 {input && (
                     <View>
-                        <TextParagraph>Select a day and time for notification</TextParagraph>
+                        <TextParagraph>Select a time for notification</TextParagraph>
                         <DatePickerIOS
                             date={this.state.NotificationTime}
                             onDateChange={this.setDate}
