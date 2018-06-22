@@ -67,3 +67,21 @@ export const Correct = styled.Text`
     padding:10px 5px;
     font-family:'Avenir-Black';
 `;
+
+export const DeckCard = styled.TouchableOpacity`
+    padding:20px 10px;
+    background:#fff;
+    margin:20px auto 10px auto;
+    width:95%;
+    border-radius:5px;
+    box-shadow:1px 1px 5px #a3a3a3;
+`;
+
+export const TextHeadline = styled.Text`
+    color:#08586f;
+    font-size:26px;
+    text-align:center;
+    padding:5px;
+    font-family:'Avenir-Black';
+    width:100%;
+`;

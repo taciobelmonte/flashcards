@@ -134,8 +134,6 @@ class QuizView extends Component {
             totalCorrect:totalCorrect,
         });
 
-        console.log('CURRENT', currentQuestion);
-
         return (
             <Main>
 

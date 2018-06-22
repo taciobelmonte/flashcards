@@ -11,8 +11,13 @@ To setup this app, you will need to follow the instructions below:
 
 2 - Run yarn start (or npm start)
 
-
 It's done! You should have Flashcard Mobile App running straight way...
+
+##Platform
+This app was tested in IOS platform.
+
+## Future implementations
+Test in Android Platform.
 
 ## Project Structure
 ```bash
@@ -35,6 +40,5 @@ It's done! You should have Flashcard Mobile App running straight way...
        ├── package.json
        ├── README.md
        ```
-
 
 Developed by @Tacio Belmonte - 2018

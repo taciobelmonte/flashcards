@@ -6,6 +6,7 @@ export function getDecks() {
         return AsyncStorage.multiGet(keys).then(stores => {
             return stores.map( (result, index, store) => {
                 let key = result[0];
+                console.log('store',store);
                 let object = {key, data: JSON.parse(store[index][1]) };
                 return object;
             });

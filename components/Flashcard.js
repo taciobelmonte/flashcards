@@ -18,6 +18,7 @@ function CardStatusBar ({backgroundColor, ...props}){
     )
 }
 
+//Tab Navigator
 const Tabs = createBottomTabNavigator({
     MainView:{
         screen: MainView,
@@ -55,6 +56,7 @@ const Tabs = createBottomTabNavigator({
     }
 });
 
+//Main Navigator
 const MainNavigator = createStackNavigator({
     MainView:{
         screen: Tabs,

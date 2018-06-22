@@ -42,12 +42,14 @@ class AddDeck extends Component {
             );
         }else{
 
+            console.log('Navigation',this.props.navigation);
+
             //Call addNewCard to update store
              this.props.saveCardToDeck(this.state.title, question, answer);
 
             //Launches an alert confirmation
              Alert.alert( 'Confirmation', 'Card has been added with success to ' + this.state.title + ' deck.',
-                 [{text: 'OK', onPress: () => this.props.navigation.navigate('MainView')},],
+                 [{text: 'OK', onPress: () => {this.props.navigation.state.params.refreshProps();this.props.navigation.navigate('MainView')}}],
              );
 
             //Set question and answer states to empty
@@ -61,6 +63,7 @@ class AddDeck extends Component {
         return (
             <Main>
                 <TextColor><FontAwesome name='plus-square' size={30} color='#fff'></FontAwesome> Add Card</TextColor>
+
                 <TextParagraph>Insert a question below</TextParagraph>
 
                 <TextInputStyled
@@ -68,7 +71,6 @@ class AddDeck extends Component {
                     placeholder="Insert a question here..."
                     editable = {true}
                     onChangeText={(value) => this.handleTextChange(value, 'question')} />
-
                 <TextParagraph>Insert an answer below</TextParagraph>
 
                 <TextInputStyled
