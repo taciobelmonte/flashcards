@@ -29,9 +29,8 @@ class AddDeck extends Component {
 
             //Launches a alert confirmation
             Alert.alert( 'Confirmation', 'Deck has been added with success!',
-                [{text: 'OK', onPress: () => {this.props.navigation.goBack(Keyboard.dismiss())}},],
+                [{text: 'OK', onPress: () => {this.props.navigation.navigate('SingleDeck', {title: input})}},],
             );
-
             //Set input state to empty
             this.setState({input: ''});
         }
