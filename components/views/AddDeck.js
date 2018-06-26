@@ -4,12 +4,17 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import { Main, TextColor, TextInputStyled, TextParagraph, ButtonStyled, Correct } from './../../utils/stylesheets'
 
-import {addNewDeck} from './../../actions'
+import {addNewDeck, fetchDecks} from './../../actions'
+import {filterDecks} from './../../utils/helpers'
 
 class AddDeck extends Component {
 
     state = {
         input: ''
+    };
+
+    refreshMainView = () => {
+        this.props.fetchDecks();
     };
 
     handleTextChange = (input) => {
@@ -29,7 +34,7 @@ class AddDeck extends Component {
 
             //Launches a alert confirmation
             Alert.alert( 'Confirmation', 'Deck has been added with success!',
-                [{text: 'OK', onPress: () => {this.props.navigation.navigate('SingleDeck', {title: input})}},],
+                [{text: 'OK', onPress: () => {this.props.navigation.navigate('SingleDeck', {title: input, refresh:this.refreshMainView})}},],
             );
             //Set input state to empty
             this.setState({input: ''});
@@ -61,12 +66,13 @@ class AddDeck extends Component {
 
 function mapStateToProps(state){
     return{
-        decks:state
+        decks: filterDecks(state).filter((item) => item.quizLength !== undefined)
     }
 }
 
 function mapDispatchToProps(dispatch){
     return {
+        fetchDecks: () => dispatch(fetchDecks()),
         addNewDeck: (deck) => dispatch(addNewDeck(deck)),
     }
 }

@@ -2,11 +2,12 @@ import React, {Component} from 'react'
 import {Alert, View, Text, ScrollView, TextInput, KeyboardAvoidingView } from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
-import {saveCardToDeck} from './../../actions'
+import {saveCardToDeck, getNotification} from './../../actions'
 import {Main, TextColor, TextInputStyled, TextParagraph, ButtonStyled, Correct }
 from './../../utils/stylesheets'
+import {setLocalNotification, clearAllNotifications} from './../../utils/helpers'
 
-class AddDeck extends Component {
+class AddCard extends Component {
 
     state = {
         question: '',
@@ -24,6 +25,7 @@ class AddDeck extends Component {
     };
 
     componentDidMount(){
+        this.props.getNotification();
         this.setState({title: this.props.navigation.state.params.title});
     }
 
@@ -35,21 +37,31 @@ class AddDeck extends Component {
                  [{text: 'OK'}],
              );
         }else if(question === '' && question === undefined){
+
             Alert.alert( 'Error', 'Question field is empty! Try to put some value.',
                 [{text: 'OK'}],
             );
+
         }else if(answer === '' || answer === undefined){
+
             Alert.alert( 'Error', 'Answer field is empty! Try to put some value.',
                 [{text: 'OK'}],
             );
+
         }else{
 
             //Call addNewCard to update store
              this.props.saveCardToDeck(this.state.title, question, answer);
 
+            //Set local notification
+            if(this.props.notification === 'true' || this.props.notification === true){
+                clearAllNotifications();
+                setLocalNotification();
+            }
+
             //Launches an alert confirmation
              Alert.alert( 'Confirmation', 'Card has been added with success to ' + this.state.title + ' deck.',
-                 [{text: 'OK', onPress: () => {this.props.navigation.state.params.refreshProps();this.props.navigation.navigate('MainView')}}],
+                 [{text: 'OK', onPress: () => {this.props.navigation.navigate('SingleDeck', {title: this.state.title, refresh: this.props.navigation.state.params.refreshProps()})}}],
              );
 
             //Set question and answer states to empty
@@ -59,6 +71,9 @@ class AddDeck extends Component {
 
     render() {
         const {question, answer} = this.state;
+        const {notification} = this.props;
+
+        console.log('NOTIFICATION', notification);
 
         return (
             <Main>
@@ -90,14 +105,16 @@ class AddDeck extends Component {
 
 function mapStateToProps(state){
     return{
-        decks:state
+        decks:state,
+        notification:state
     }
 }
 
 function mapDispatchToProps(dispatch){
     return {
+        getNotification: () => dispatch(getNotification()),
         saveCardToDeck: (deckTitle, question, answer) => dispatch(saveCardToDeck(deckTitle, question, answer)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddDeck);
+export default connect(mapStateToProps, mapDispatchToProps)(AddCard);

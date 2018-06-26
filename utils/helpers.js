@@ -12,27 +12,60 @@ export const filterDecks = ({decks}) =>
         questions: decks[key].questions,
     }));
 
-
  //Function to clear notifications
  export function clearAllNotifications() {
      console.log('limpou notificacoes');
-    return AsyncStorage.removeItem(NOTIFICATION_KEY).then( Notifications.cancelAllScheduledNotificationsAsync );
+     return AsyncStorage.removeItem(NOTIFICATION_KEY).then( Notifications.cancelAllScheduledNotificationsAsync );
  }
 
  //Function to create Notification
 function createNotification(){
      return {
-         title: 'Test your knowledge in a Quiz!',
-         body: '👋 See you performance at the end!',
+         title: 'It is time to take a quiz!',
+         body: '👋 Just for let you know that some quizzes are waiting for you to do!',
          ios: {
              sound: true,
          }
      }
 }
 
+export function changeStatus(status){
+    try{
+        if(status === true){
+            AsyncStorage.setItem('NotificationStatus', 'true');
+        }else{
+            AsyncStorage.setItem('NotificationStatus', 'false');
+        }
+        return AsyncStorage.getItem('NotificationStatus').then((value) => {
+            if(value === null || value === undefined || value === 'false' || value === false){
+                return false;
+            }else{
+                return true;
+            }
+        });
+    }catch(e){
+        console.log("error", e);
+        return false;
+    }
+}
+
+ export function getNotificationStatus(){
+     try{
+         return AsyncStorage.getItem('NotificationStatus').then((value) => {
+             if(value === null || value === undefined || value === 'false' || value === false){
+                 return false;
+             }else{
+                 return true;
+             }
+         });
+     }catch(e){
+         console.log("error", e);
+         return false;
+     }
+ }
+
 //Credits: Code gotten from Udacifitness lesson
 export function setLocalNotification(time) {
-    console.log('chamou notificacao');
     AsyncStorage.getItem(NOTIFICATION_KEY)
         .then(JSON.parse)
         .then((data) => {
@@ -40,6 +73,12 @@ export function setLocalNotification(time) {
                 Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
                     if (status === 'granted') {
                         Notifications.cancelAllScheduledNotificationsAsync();
+
+                         time.setDate(time.getDate()+1);
+                         // console.log("notificacao vai acontecer ", time);
+                         // console.log("salvou asssim",JSON.stringify(time));
+                        //
+                        AsyncStorage.setItem('time', JSON.stringify(time));
 
                         Notifications.scheduleLocalNotificationAsync(createNotification(), {
                             time: time,
@@ -51,3 +90,4 @@ export function setLocalNotification(time) {
             }
         });
 }
+

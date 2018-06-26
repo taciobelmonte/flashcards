@@ -1,50 +1,81 @@
 import React from 'react';
-import { View, Text, ScrollView, DatePickerIOS, Switch} from 'react-native';
+import { View, Text, ScrollView, DatePickerIOS, Switch, AsyncStorage} from 'react-native';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import {Main, TextColor, TextParagraph} from './../../utils/stylesheets'
-import {setLocalNotification, clearAllNotifications} from './../../utils/helpers'
+import {connect} from 'react-redux'
+import {getNotification, changeNotificationStatus} from './../../actions'
+import {setLocalNotification, clearAllNotifications, saveNotificationTime} from './../../utils/helpers'
 
-export default class Settings extends React.Component {
+class Settings extends React.Component {
 
     state = {
-        input:false,
+        input: false,
         NotificationTime: new Date()
     };
 
     constructor(props) {
         super(props);
-        this.state = { NotificationTime: new Date() };
         this.setDate = this.setDate.bind(this);
     }
 
     //Set new time
     setDate(newTime) {
-        this.setState({NotificationTime: newTime});
-        setLocalNotification(newTime);
+
+        if(this.props.notification === 'true' || this.props.notification === true){
+            this.setState({NotificationTime: newTime});
+        }
     }
+
+    componentDidMount(){
+
+        //Updates store to get notification status
+        this.props.getNotification();
+    }
+
+    changeStatus = (status) => {
+        this.props.changeNotificationStatus(status);
+    };
+
 
     //Change switch button
     changeSwitch = () =>{
-        clearAllNotifications();
-        this.setState((state) =>({
-            input:!state.input
-        }));
+
+         if(this.props.notification === 'true' || this.props.notification === true){
+             console.log('removeu status');
+
+             //Change notification status to false
+             this.changeStatus(false);
+
+         }else{
+             console.log('salvou status');
+
+             //Change notification status
+             this.changeStatus(true);
+
+             //Clear all notifications
+             clearAllNotifications();
+
+             //Set new time for notifications
+             setLocalNotification(this.state.NotificationTime);
+         }
     };
 
     render() {
-        const {input} = this.state;
+        const {notification} = this.props;
+
+
         return (
             <Main>
                 <TextColor><Ionicons name='ios-settings' size={30} color='#fff'></Ionicons> SETTINGS</TextColor>
 
                 <Main style={{justifyContent: 'center', alignItems: 'center',}}>
                     <TextParagraph>Enable Notifications</TextParagraph>
-                    <Switch style={{flex:2}} value={input} onValueChange={this.changeSwitch} />
+                    <Switch style={{flex:2}} value={notification} onValueChange={this.changeSwitch} />
                 </Main>
 
-                {input && (
+                {notification && (
                     <View>
-                        <TextParagraph>Select a time for notification</TextParagraph>
+                        <TextParagraph>Select a time for notifications</TextParagraph>
                         <DatePickerIOS
                             date={this.state.NotificationTime}
                             onDateChange={this.setDate}
@@ -57,3 +88,17 @@ export default class Settings extends React.Component {
     }
 }
 
+function mapStateToProps(state){
+    return{
+        notification:state.notification
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        changeNotificationStatus: (status) => dispatch(changeNotificationStatus(status)),
+        getNotification: () => dispatch(getNotification()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

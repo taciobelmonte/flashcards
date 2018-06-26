@@ -5,6 +5,7 @@ import {Main, ButtonStyled, OtherView, Correct, Question, AnswerParagraph, Incor
 import { connect } from 'react-redux'
 import {fetchDecks} from './../../actions'
 import {filterDecks} from './../../utils/helpers'
+import Results from './Results'
 
 class QuizView extends Component {
 
@@ -45,11 +46,6 @@ class QuizView extends Component {
         });
     };
 
-    //Function to calculate percentage of right answers
-    calculatePercentage = (total, totalCorrect) => {
-        return (100*totalCorrect/total);
-    };
-
     static navigationOptions = ({navigation}) =>{
         return {
             title: "Quiz for " + navigation.state.params.title,
@@ -73,22 +69,9 @@ class QuizView extends Component {
                         <Progress>{currentQuestion+1}/{questions[0].length}</Progress>
                         <OtherView>
 
-                            {finalized && (
-                                <View>
-                                    <Question>You answered {questions[0].length} question{questions[0].length === 1 ? '' : 's' } and your percentage was {this.calculatePercentage(questions[0].length, totalCorrect)}%</Question>
-                                    <ButtonStyled onPress={() => this.resetQuiz()} style={{backgroundColor:'#1bb869'}}>
-                                        <Correct>Restart Quiz</Correct>
-                                    </ButtonStyled>
-
-                                    <ButtonStyled onPress={() => this.props.navigation.goBack()} style={{backgroundColor:'#f6b63a'}}>
-                                        <Answer>Back to Deck</Answer>
-                                    </ButtonStyled>
-                                </View>
-                            )}
-
-                            {!finalized && (
+                            {finalized ? <Results questions={questions} finalized={finalized} resetQuiz={this.resetQuiz} totalCorrect={totalCorrect} navigation={this.props.navigation}/> :
                                 <Question>Question: {questions[0][currentQuestion].question}</Question>
-                            )}
+                            }
 
                             {showAnswer && (
                                 <AnswerParagraph>Answer: {questions[0][currentQuestion].answer}</AnswerParagraph>

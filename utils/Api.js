@@ -11,8 +11,9 @@ export function getDecks() {
                 return object;
             });
         });
-    });;
+    });
 }
+
 
 //Function to save a new deck
 export const saveDeck = (deckTitle) =>{
